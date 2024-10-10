@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<psalm
+        totallyTyped="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://raw.githubusercontent.com/vimeo/psalm/master/src/Psalm/config.xsd"
+        errorLevel="2"
+        resolveFromConfigFile="true"
+        hideExternalErrors="false"
+        findUnusedPsalmSuppress="true"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <directory name="public"/>
+        <directory name="tests"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <MissingReturnType errorLevel="error"/>
+        <MissingParamType errorLevel="error"/>
+        <MissingConstructor errorLevel="error"/>
+        <PropertyNotSetInConstructor errorLevel="error"/>
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="*::__construct"/>
+            </errorLevel>
+        </PossiblyUnusedMethod>
+        <InaccessibleProperty errorLevel="error"/>
+        <InvalidReturnType errorLevel="error"/>
+        <!-- Add any other issue handlers as necessary -->
+    </issueHandlers>
+
+    <plugins>
+<!--        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin" />-->
+<!--        <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />-->
+    </plugins>
+
+    <taintAnalysis forbiddenFunctions="exec,system,shell_exec,eval"/>
+</psalm>

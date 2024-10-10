@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ruleset name="Custom PHPMD Ruleset"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 https://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="https://pmd.sf.net/ruleset_xml_schema.xsd">
+
+    <description>
+        This is a custom rule set for PHPMD to enforce our coding standards and practices.
+    </description>
+
+    <!-- Exclude specific files or directories -->
+    <exclude-pattern>*/tests/*</exclude-pattern>
+
+    <!-- Consider these rules for clean code approaches -->
+    <rule ref="rulesets/cleancode.xml">
+        <!-- Exclude a specific rule -->
+        <exclude name="ElseExpression"/>
+    </rule>
+
+    <!-- Check complexity and size-related metrics -->
+    <rule ref="rulesets/codesize.xml" />
+
+    <!-- Apply design related rules -->
+    <rule ref="rulesets/design.xml">
+        <!-- You can configure rule properties -->
+        <properties>
+            <property name="ignoreUnusedPrivateMethodPatterns" value="lazyGet|init"/>
+        </properties>
+    </rule>
+
+    <!-- Enforce certain naming conventions -->
+    <rule ref="rulesets/naming.xml">
+        <properties>
+            <property name="shortVariable" value="1"/>
+            <property name="longVariable" value="20"/>
+        </properties>
+    </rule>
+
+    <!-- Find controversial rules -->
+    <rule ref="rulesets/controversial.xml" />
+
+    <!-- Detect unused code -->
+    <rule ref="rulesets/unusedcode.xml" />
+
+</ruleset>

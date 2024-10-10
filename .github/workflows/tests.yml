@@ -1,0 +1,55 @@
+name: PHP CI
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest --ignore-platform-req=ext-http
+
+      - name: Run phpcs
+        run: ./vendor/bin/phpcs -s --standard=phpcs.xml --report-full=phpcs-full.log pub --report-summary || true
+
+      - name: Run phpmd
+        run: ./vendor/bin/phpmd --strict --color pub text phpmd.xml || true
+
+      - name: Run phpstan
+        run: ./vendor/bin/phpstan analyse ./pub --level 8 --error-format=table || true
+
+      - name: Run psalm
+        run: php psalm.phar --config=psalm.xml --output-format=compact --generate-json-map=psalm-output.json || true
+
+      - name: Run rector
+        run: ./vendor/bin/rector process pub --dry-run || true
+
+      - name: Run composer-normalize
+        run: composer normalize || true
+
+      - name: Run security-checker
+        run: ./vendor/bin/security-checker security:check composer.lock || true
+
+      - name: Run unit tests
+        run: ./vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --testsuite unit --fail-on-risky
+
+      - name: Run integration tests
+        run: ./vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --testsuite integration --fail-on-risky
+
+      - name: Run functional tests
+        run: ./vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --testsuite functional --fail-on-risky

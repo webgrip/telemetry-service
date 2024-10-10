@@ -1,0 +1,15 @@
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
+    - vendor/jangregor/phpstan-prophecy/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+
+#maximumNumberOfProcesses: 1
+
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+    bootstrapFiles:
+        - vendor/autoload.php

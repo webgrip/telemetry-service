@@ -1,0 +1,6 @@
+.idea/
+vendor/
+var/
+.composer/
+.env
+*.private.env.json

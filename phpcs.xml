@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ruleset name="AdvancedCustomStandard">
+    <rule ref="PSR12"/>
+
+    <description>The coding standards of the project.</description>
+
+    <exclude-pattern>vendor/*</exclude-pattern>
+
+    <file>src/</file>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+    </rule>
+
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="false"/>
+        </properties>
+    </rule>
+
+    <rule ref="Generic.Commenting.Todo">
+        <severity>6</severity>
+    </rule>
+
+    <rule ref="Generic.PHP.DisallowShortOpenTag">
+        <severity>10</severity>
+    </rule>
+
+    <arg name="extensions" value="php"/>
+</ruleset>
