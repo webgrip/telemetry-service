@@ -2,6 +2,13 @@
     "name": "webgrip/telemetry-service",
     "type": "library",
     "license": "MIT",
+    "version": "0.0.1",
+    "description": "A simple telemetry service for PHP applications",
+    "keywords": [
+        "telemetry",
+        "opentelemetry",
+        "php"
+    ],
     "autoload": {
         "psr-4": {
             "Webgrip\\TelemetryService\\": "src/"
