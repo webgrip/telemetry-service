@@ -32,8 +32,7 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
         private LoggerProviderFactoryInterface $loggerProviderFactory,
         private TracerProviderFactoryInterface $tracerProviderFactory,
         private ClientInterface $client,
-    )
-    {
+    ) {
     }
 
     /**
@@ -45,8 +44,11 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
      * @throws GuzzleException
      * @throws NotFoundExceptionInterface
      */
-    public function create(ContainerInterface $configuration, Logger $logger, $throwExceptionWhenHealthCheckFails = true): TelemetryService
-    {
+    public function create(
+        ContainerInterface $configuration,
+        Logger $logger,
+        $throwExceptionWhenHealthCheckFails = true
+    ): TelemetryService {
         $resourceInfo = ResourceInfo::create(
             Attributes::create([
                 ResourceAttributes::DEPLOYMENT_ENVIRONMENT_NAME => $configuration->get('applicationEnvironmentName'),
@@ -57,7 +59,7 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
         );
 
         try {
-            $response = $this->client->get('http://'. $configuration->get('otelCollectorHost') .':13133');
+            $response = $this->client->get('http://' . $configuration->get('otelCollectorHost') . ':13133');
             $statusCode = $response->getStatusCode();
 
             if (!in_array($statusCode, [Response::HTTP_OK, Response::HTTP_NO_CONTENT])) {

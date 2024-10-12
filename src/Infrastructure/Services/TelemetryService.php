@@ -22,8 +22,7 @@ final readonly class TelemetryService implements TelemetryServiceInterface
         private LoggerProviderInterface $loggerProvider,
         private TracerProviderInterface $tracerProvider,
         private Logger $logger,
-    )
-    {
+    ) {
         $this->logger->pushHandler(
             new Handler(
                 $this->loggerProvider,

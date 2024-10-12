@@ -20,8 +20,7 @@ final class LoggerProviderFactory implements LoggerProviderFactoryInterface
      */
     public function __construct(
         private readonly ContainerInterface $configuration
-    )
-    {
+    ) {
     }
 
     /**

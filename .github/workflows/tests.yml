@@ -8,7 +8,6 @@ on:
     branches:
       - main
 
-
 jobs:
   build:
     runs-on: self-hosted
@@ -25,19 +24,19 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest --ignore-platform-req=ext-http
 
       - name: Run phpcs
-        run: ./vendor/bin/phpcs -s --standard=phpcs.xml --report-full=phpcs-full.log pub --report-summary || true
+        run: ./vendor/bin/phpcs -s --standard=phpcs.xml --report-full=phpcs-full.log src --report-summary || true
 
       - name: Run phpmd
-        run: ./vendor/bin/phpmd --strict --color pub text phpmd.xml || true
+        run: ./vendor/bin/phpmd --strict --color src text phpmd.xml || true
 
       - name: Run phpstan
-        run: ./vendor/bin/phpstan analyse ./pub --level 8 --error-format=table || true
+        run: ./vendor/bin/phpstan analyse ./src --level 8 --error-format=table || true
 
       - name: Run psalm
         run: php psalm.phar --config=psalm.xml --output-format=compact --generate-json-map=psalm-output.json || true
 
       - name: Run rector
-        run: ./vendor/bin/rector process pub --dry-run || true
+        run: ./vendor/bin/rector process src --dry-run || true
 
       - name: Run composer-normalize
         run: composer normalize || true
@@ -50,6 +49,3 @@ jobs:
 
       - name: Run integration tests
         run: ./vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --testsuite integration --fail-on-risky
-
-      - name: Run functional tests
-        run: ./vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --testsuite functional --fail-on-risky

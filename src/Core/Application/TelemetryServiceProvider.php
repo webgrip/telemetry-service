@@ -24,8 +24,7 @@ readonly class TelemetryServiceProvider
      */
     public function __construct(
         private ContainerInterface $configuration
-    )
-    {
+    ) {
     }
 
     /**
@@ -37,14 +36,14 @@ readonly class TelemetryServiceProvider
         $configuration = $this->configuration;
 
         $container->set(ResourceInfo::class, function (Container $container) use ($configuration) {
-            return ResourceInfo::create(
-                Attributes::create([
-                    ResourceAttributes::DEPLOYMENT_ENVIRONMENT_NAME => $configuration->get('applicationEnvironmentName'),
-                    ResourceAttributes::SERVICE_NAMESPACE => $configuration->get('applicationNamespace'),
-                    ResourceAttributes::SERVICE_NAME => $configuration->get('applicationName'),
-                    ResourceAttributes::SERVICE_VERSION => $configuration->get('applicationVersion'),
-                ])
-            );
+            $attributes = Attributes::create([
+                ResourceAttributes::DEPLOYMENT_ENVIRONMENT_NAME => $configuration->get('applicationEnvironmentName'),
+                ResourceAttributes::SERVICE_NAMESPACE => $configuration->get('applicationNamespace'),
+                ResourceAttributes::SERVICE_NAME => $configuration->get('applicationName'),
+                ResourceAttributes::SERVICE_VERSION => $configuration->get('applicationVersion'),
+            ]);
+
+            return ResourceInfo::create($attributes);
         });
 
         $container->set(LoggerProviderFactoryInterface::class, function (Container $container) use ($configuration) {
@@ -74,5 +73,4 @@ readonly class TelemetryServiceProvider
             );
         });
     }
-
 }

@@ -21,8 +21,7 @@ final readonly class TracerProviderFactory implements TracerProviderFactoryInter
      */
     public function __construct(
         private ContainerInterface $configuration
-    )
-    {
+    ) {
     }
 
     /**

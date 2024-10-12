@@ -10,7 +10,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Define what rule sets will the Rector apply
 return static function (Rector\Config\RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
-        __DIR__ . '/pub',
+        __DIR__ . '/src',
         __DIR__ . '/tests',
     ]);
 
