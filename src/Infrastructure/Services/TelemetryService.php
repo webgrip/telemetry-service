@@ -13,6 +13,11 @@ use Webgrip\TelemetryService\Core\Domain\Services\TelemetryServiceInterface;
 
 final readonly class TelemetryService implements TelemetryServiceInterface
 {
+    /**
+     * @param LoggerProviderInterface $loggerProvider
+     * @param TracerProviderInterface $tracerProvider
+     * @param Logger $logger
+     */
     public function __construct(
         private LoggerProviderInterface $loggerProvider,
         private TracerProviderInterface $tracerProvider,
@@ -27,13 +32,19 @@ final readonly class TelemetryService implements TelemetryServiceInterface
         );
     }
 
-    public function tracer(): TracerInterface
-    {
-        return $this->tracerProvider->getTracer('io.opentelemetry.contrib.php');
-    }
-
+    /**
+     * @return LoggerInterface
+     */
     public function logger(): LoggerInterface
     {
         return $this->logger;
+    }
+
+    /**
+     * @return TracerInterface
+     */
+    public function tracer(): TracerInterface
+    {
+        return $this->tracerProvider->getTracer('io.opentelemetry.contrib.php');
     }
 }
