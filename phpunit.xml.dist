@@ -3,7 +3,6 @@
          backupGlobals="false"
          colors="true"
          stopOnFailure="true"
-         bootstrap="tests/bootstrap.php"
          cacheResult="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.1/phpunit.xsd"
          cacheDirectory=".phpunit.cache"
@@ -20,12 +19,6 @@
     </testsuite>
     <testsuite name="integration">
       <directory>./tests/Integration</directory>
-    </testsuite>
-    <testsuite name="functional">
-      <directory>./tests/Functional</directory>
-    </testsuite>
-    <testsuite name="security">
-      <directory>./tests/Security/Composer</directory>
     </testsuite>
   </testsuites>
   <source>

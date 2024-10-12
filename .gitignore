@@ -4,3 +4,4 @@ var/
 .composer/
 .env
 *.private.env.json
+auth.json
