@@ -8,21 +8,30 @@ use OpenTelemetry\Contrib\Otlp\OtlpHttpTransportFactory;
 use OpenTelemetry\SDK\Logs\LoggerProvider;
 use OpenTelemetry\SDK\Logs\Processor\SimpleLogRecordProcessor;
 use OpenTelemetry\SDK\Resource\ResourceInfo;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Webgrip\TelemetryService\Core\Application\Factories\LoggerProviderFactoryInterface;
-use Webgrip\TelemetryService\Infrastructure\Configuration\Configuration;
 
 final class LoggerProviderFactory implements LoggerProviderFactoryInterface
 {
+    /**
+     * @param ContainerInterface $configuration
+     */
     public function __construct(
-        private readonly Configuration $configuration
+        private readonly ContainerInterface $configuration
     )
     {
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function create(ResourceInfo $resourceInfo): LoggerProviderInterface
     {
         $transport = (new OtlpHttpTransportFactory())->create(
-            'http://' . $this->configuration->otelCollectorHost . ':4318' . '/v1/logs',
+            'http://' . $this->configuration->get('otelCollectorHost') . ':4318' . '/v1/logs',
             'application/json'
         );
 
