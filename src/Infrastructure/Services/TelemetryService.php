@@ -5,6 +5,8 @@ namespace Webgrip\TelemetryService\Infrastructure\Services;
 use Monolog\Level;
 use Monolog\Logger;
 use OpenTelemetry\API\Logs\LoggerProviderInterface;
+use OpenTelemetry\API\Trace\SpanInterface;
+use OpenTelemetry\API\Trace\StatusCode;
 use OpenTelemetry\API\Trace\TracerInterface;
 use OpenTelemetry\API\Trace\TracerProviderInterface;
 use OpenTelemetry\Contrib\Logs\Monolog\Handler;
@@ -45,5 +47,12 @@ final readonly class TelemetryService implements TelemetryServiceInterface
     public function tracer(): TracerInterface
     {
         return $this->tracerProvider->getTracer('io.opentelemetry.contrib.php');
+    }
+
+    public function registerException(\Throwable $exception, SpanInterface $span): void
+    {
+        $this->logger()->error($exception->getMessage(), ['exception' => $exception]);
+        $span->setStatus(StatusCode::STATUS_ERROR, $exception->getMessage());
+        $span->recordException($exception);
     }
 }
