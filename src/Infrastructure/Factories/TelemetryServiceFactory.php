@@ -39,7 +39,6 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
     /**
      * @param ContainerInterface $configuration
      * @param Logger $logger
-     * @param $throwExceptionWhenHealthCheckFails
      * @return TelemetryService
      * @throws ContainerExceptionInterface
      * @throws GuzzleException
@@ -47,8 +46,7 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
      */
     public function create(
         ContainerInterface $configuration,
-        Logger $logger,
-        $throwExceptionWhenHealthCheckFails = true
+        Logger $logger
     ): TelemetryService {
         $resourceInfo = ResourceInfo::create(
             Attributes::create([
@@ -97,17 +95,20 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
             ])
         );
 
+        $healthCheckUrl = 'http://' . $configuration->get('otelCollectorHost') . ':13133';
+
         try {
-            $response = $this->client->get('http://' . $configuration->get('otelCollectorHost') . ':13133');
+            $response = $this->client->get($healthCheckUrl);
             $statusCode = $response->getStatusCode();
 
             if (!in_array($statusCode, [Response::HTTP_OK, Response::HTTP_NO_CONTENT])) {
                 throw new CancellationException('Health check failed. Status code: ' . $statusCode);
             }
         } catch (GuzzleException | CancellationException $e) {
-            if ($throwExceptionWhenHealthCheckFails) {
-                throw $e;
-            }
+            $logger->warning(
+                'Health check for telemetry collector to ' . $healthCheckUrl . ' failed with exception ' . $e->getMessage(),
+                ['exception' => $e]
+            );
 
             return new TelemetryService(
                 new NoopLoggerProvider(),
