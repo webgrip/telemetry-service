@@ -5,6 +5,7 @@ namespace Webgrip\TelemetryService\Infrastructure\Services;
 use Monolog\Level;
 use Monolog\Logger;
 use OpenTelemetry\API\Logs\LoggerProviderInterface;
+use OpenTelemetry\API\Trace\Span;
 use OpenTelemetry\API\Trace\SpanInterface;
 use OpenTelemetry\API\Trace\StatusCode;
 use OpenTelemetry\API\Trace\TracerInterface;
@@ -54,5 +55,13 @@ final readonly class TelemetryService implements TelemetryServiceInterface
         $this->logger()->error($exception->getMessage(), ['exception' => $exception]);
         $span->setStatus(StatusCode::STATUS_ERROR, $exception->getMessage());
         $span->recordException($exception);
+    }
+
+    /**
+     * @return SpanInterface
+     */
+    public function getCurrentSpan(): SpanInterface
+    {
+        return Span::getCurrent();
     }
 }

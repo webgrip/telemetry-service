@@ -20,7 +20,6 @@ use Webgrip\TelemetryService\Core\Application\Factories\LoggerProviderFactoryInt
 use Webgrip\TelemetryService\Core\Application\Factories\TelemetryServiceFactoryInterface;
 use Webgrip\TelemetryService\Core\Application\Factories\TracerProviderFactoryInterface;
 use Webgrip\TelemetryService\Infrastructure\Services\TelemetryService;
-use Webgrip\TelemetryService\Infrastructure\Telemetry\NoopOpenTelemetryCollector;
 
 final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
 {

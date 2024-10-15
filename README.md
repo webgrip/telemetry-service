@@ -55,3 +55,38 @@ class Foo
     }
 }
 ```
+
+
+### Using attributes
+> You can add the attribute 'Webgrip\TelemetryService\Core\Domain\Services\Traceable' to your class to automatically trace all methods of the class
+> You can also use this attribute to trace a single method
+
+```php
+
+#[\Webgrip\TelemetryService\Core\Domain\Attributes\Traceable]
+class Foo
+{
+    public function bar()
+    {
+        // ...
+    }
+    
+    #[\Webgrip\TelemetryService\Core\Domain\Attributes\Traceable]
+    public function baz()
+    {
+        // ...
+    }
+}
+```
+}
+
+// DI configuration
+return [
+    Foo::class => function (\DI\Container $container) {
+        $factory = $container->get(\Webgrip\TelemetryService\Infrastructure\Factories\TracedClassFactory::class)
+        $foo = new Foo();
+        
+        return $factory->create($foo);
+    }
+];
+```
