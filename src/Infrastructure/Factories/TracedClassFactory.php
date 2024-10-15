@@ -2,10 +2,10 @@
 
 namespace Webgrip\TelemetryService\Infrastructure\Factories;
 
-use Webgrip\TelemetryService\Core\Domain\Services\TelemetryServiceInterface;
-use Webgrip\TelemetryService\Core\Domain\Services\Traceable;
-use Webgrip\TelemetryService\Infrastructure\Services\TracingProxy;
 use ReflectionClass;
+use Webgrip\TelemetryService\Core\Domain\Attributes\Traceable;
+use Webgrip\TelemetryService\Core\Domain\Services\TelemetryServiceInterface;
+use Webgrip\TelemetryService\Infrastructure\Services\TracingProxy;
 
 class TracedClassFactory
 {

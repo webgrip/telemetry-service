@@ -4,8 +4,8 @@ namespace Webgrip\TelemetryService\Infrastructure\Services;
 
 use ReflectionClass;
 use ReflectionMethod;
+use Webgrip\TelemetryService\Core\Domain\Attributes\Traceable;
 use Webgrip\TelemetryService\Core\Domain\Services\TelemetryServiceInterface;
-use Webgrip\TelemetryService\Core\Domain\Services\Traceable;
 
 class TracingProxy
 {

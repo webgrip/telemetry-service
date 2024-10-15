@@ -60,9 +60,10 @@ class Foo
 ### Using attributes
 > You can add the attribute 'Webgrip\TelemetryService\Core\Domain\Services\Traceable' to your class to automatically trace all methods of the class
 > You can also use this attribute to trace a single method
+
 ```php
 
-#[\Webgrip\TelemetryService\Core\Domain\Services\Traceable]
+#[\Webgrip\TelemetryService\Core\Domain\Attributes\Traceable]
 class Foo
 {
     public function bar()
@@ -70,7 +71,7 @@ class Foo
         // ...
     }
     
-    #[\Webgrip\TelemetryService\Core\Domain\Services\Traceable]
+    #[\Webgrip\TelemetryService\Core\Domain\Attributes\Traceable]
     public function baz()
     {
         // ...
