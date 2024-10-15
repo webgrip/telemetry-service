@@ -24,4 +24,9 @@ interface TelemetryServiceInterface
      * @return void
      */
     public function registerException(\Throwable $exception, SpanInterface $span): void;
+
+    /**
+     * @return SpanInterface
+     */
+    public function getCurrentSpan(): SpanInterface;
 }

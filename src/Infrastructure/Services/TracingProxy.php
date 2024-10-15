@@ -2,6 +2,7 @@
 
 namespace Webgrip\TelemetryService\Infrastructure\Services;
 
+use OpenTelemetry\API\Trace\SpanInterface;
 use ReflectionClass;
 use ReflectionMethod;
 use Webgrip\TelemetryService\Core\Domain\Attributes\Traceable;
@@ -9,8 +10,12 @@ use Webgrip\TelemetryService\Core\Domain\Services\TelemetryServiceInterface;
 
 class TracingProxy
 {
+    public TelemetryServiceInterface $telemetryService;
     private object $instance;
-    private TelemetryServiceInterface $telemetryService;
+
+    public SpanInterface $span;
+
+
     private bool $traceAllMethods;
 
     /**
@@ -37,26 +42,33 @@ class TracingProxy
     public function __call(string $method, array $arguments)
     {
         $reflectionMethod = new ReflectionMethod($this->instance, $method);
-        $traceableMethod = !empty($reflectionMethod->getAttributes(Traceable::class));
+        $traceableAttributes = $reflectionMethod->getAttributes(Traceable::class);
+        $traceableMethod = !empty($traceableAttributes);
+
+        // Set operation name from attribute or use the method name as fallback
+        $operationName = $method;
+        if ($traceableMethod) {
+            /** @var Traceable $traceableInstance */
+            $traceableInstance = $traceableAttributes[0]->newInstance();
+            $operationName = $traceableInstance->operationName ?? $method;
+        }
 
         if ($this->traceAllMethods || $traceableMethod) {
-            $operationName = $traceableMethod ?
-                $method :
-                (new ReflectionClass($this->instance))->getName();
-
-            $span = $this->telemetryService->tracer()
+            $this->span = $this->telemetryService->tracer()
                 ->spanBuilder($operationName)
                 ->startSpan();
-            $scope = $span->activate();
+
+            $scope = $this->span->activate();
 
             try {
+                // Invoke the original method with the arguments
                 return $reflectionMethod->invokeArgs($this->instance, $arguments);
             } catch (\Throwable $e) {
-                $this->telemetryService->registerException($e, $span);
+                $this->telemetryService->registerException($e, $this->span);
                 throw $e;
             } finally {
                 $scope->detach();
-                $span->end();
+                $this->span->end();
             }
         } else {
             return $reflectionMethod->invokeArgs($this->instance, $arguments);
