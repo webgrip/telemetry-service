@@ -11,7 +11,7 @@
 #%
 #% EXAMPLES
 #%    DOCKER_CONTAINER=telemetry-service /.${SCRIPT_NAME}
-#%
+#%./developi
 #================================================================
 #- IMPLEMENTATION
 #-    version         ${SCRIPT_NAME} 0.0.1
@@ -81,46 +81,46 @@ if [ $# -gt 0 ];then
             ;;
         "phpcs")
             shift
-            docker run --rm -it -v ${pwd}:/app -w /app php:8.2.18-cli php vendor/bin/phpcs --standard=phpcs.xml --extensions=php src
+            docker run --rm -it -v $(pwd):/app -w /app php:8.3-cli php vendor/bin/phpcs --standard=phpcs.xml --extensions=php src
             ;;
         "phpcbf")
             shift
-            docker run --rm -it -v ${pwd}:/app -w /app php:8.2.18-cli php vendor/bin/phpcbf --standard=phpcs.xml --extensions=php src
+            docker run --rm -it -v $(pwd):/app -w /app php:8.3-cli php vendor/bin/phpcbf --standard=phpcs.xml --extensions=php src
             ;;
         "phpmd")
             shift
-            docker run --rm -itv ${pwd}:/app -w /app php:8.2.18-fpm php vendor/bin/phpmd src text phpmd.xml
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/bin/phpmd src text phpmd.xml
             ;;
         "phpstan")
             shift
-            docker run --rm -it -v ${pwd}:/app -w /app php:8.2.18-fpm php vendor/bin/phpstan analyse src --level 8
+            docker run --rm -it -v $(pwd):/app -w /app php:8.3-fpm php vendor/bin/phpstan analyse src --level 8
             ;;
         "psalm")
             shift
-            docker run --rm -itv ${pwd}:/app -w /app php:8.2.18-fpm php psalm.phar --config=psalm.xml "$@"
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php psalm.phar --config=psalm.xml "$@"
             ;;
         "rector")
             shift
-            docker run --rm -itv ${pwd}:/app -w /app php:8.2.18-fpm php vendor/bin/rector process pub
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/bin/rector process pub
             ;;
         "security-checker")
             shift
-            docker run --rm -itv ${pwd}:/app -w /app php:8.2.18-fpm php vendor/bin/security-checker security:check composer.lock
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/bin/security-checker security:check composer.lock
             ;;
         "composer-normalize")
             shift
-            docker run --rm -itv ${pwd}:/app -w /app composer:latest composer normalize
+            docker run --rm -itv $(pwd):/app -w /app composer:latest composer normalize
             ;;
         "test") # https://www.php.net/manual/en/intro.phpdbg.php -> TODO BETER DAN XDEBUG, gebruiken ipv php
             shift
-            docker run --rm -itv ${pwd}:/app -w /app php:8.2.18-fpm php vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --testsuite unit --fail-on-risky $@
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --testsuite unit --fail-on-risky $@
             ;;
         "integration")
             shift
             runOnDocker vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --testsuite integration --fail-on-risky $@
             ;;
         "analyze")
-            docker run --rm -itv ${pwd}:/app -w /app php:8.2.18-fpm php vendor/bin/phpcs --standard=phpcs.xml --extensions=php --report=full pub
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/bin/phpcs --standard=phpcs.xml --extensions=php --report=full pub
             ;;
         "pre-commit-phpcs")
             php vendor/bin/phpcs --standard=phpcs.xml pub
@@ -128,7 +128,7 @@ if [ $# -gt 0 ];then
         "pre-commit-static-analysis-changed")
             $(git --no-pager diff --name-only --diff-filter=MARC| grep -E 'pub/')
             if [ $? -eq 0 ]; then
-                docker run --rm -v /${pwd}:/app phpstan/phpstan analyse --level max --no-progress $(git --no-pager diff --name-only --diff-filter=MARC| grep -E 'pub/')
+                docker run --rm -v /$(pwd):/app phpstan/phpstan analyse --level max --no-progress $(git --no-pager diff --name-only --diff-filter=MARC| grep -E 'pub/')
             fi
            ;;
 #        "jsinstall")
@@ -154,7 +154,7 @@ if [ $# -gt 0 ];then
             runOnDocker tail -f /var/log/app.log
            ;;
         "composer")
-            docker run --rm -itv ${pwd}:/app -w /app composer "$@"
+            docker run --rm -itv $(pwd):/app -w /app composer "$@"
             ;;
         *)
         runOnDocker "$@"

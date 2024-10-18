@@ -9,5 +9,6 @@ class Traceable
 {
     public function __construct(
         public ?string $operationName = null
-    ) {}
+    ) {
+    }
 }
