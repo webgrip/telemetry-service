@@ -16,17 +16,12 @@ use Webgrip\TelemetryService\Core\Application\Factories\TracerProviderFactoryInt
 
 final readonly class TracerProviderFactory implements TracerProviderFactoryInterface
 {
-    /**
-     * @param ContainerInterface $configuration
-     */
     public function __construct(
         private ContainerInterface $configuration
     ) {
     }
 
     /**
-     * @param ResourceInfo $resourceInfo
-     * @return TracerProviderInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

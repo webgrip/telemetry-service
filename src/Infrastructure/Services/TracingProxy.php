@@ -7,43 +7,32 @@ use ReflectionClass;
 use ReflectionMethod;
 use Webgrip\TelemetryService\Core\Domain\Attributes\Traceable;
 use Webgrip\TelemetryService\Core\Domain\Services\TelemetryServiceInterface;
+use Webgrip\TelemetryService\Core\Domain\Services\TracingProxyInterface;
 
-class TracingProxy
+class TracingProxy implements TracingProxyInterface
 {
-    public TelemetryServiceInterface $telemetryService;
-    private object $instance;
 
     public SpanInterface $span;
 
 
     private bool $traceAllMethods;
 
-    /**
-     * @param object $instance
-     * @param TelemetryServiceInterface $telemetryService
-     */
-    public function __construct(object $instance, TelemetryServiceInterface $telemetryService)
+    public function __construct(private object $instance, public TelemetryServiceInterface $telemetryService)
     {
-        $this->instance = $instance;
-        $this->telemetryService = $telemetryService;
-
         // Check if the class itself is marked as Traceable
         $reflectionClass = new ReflectionClass($this->instance);
-        $this->traceAllMethods = !empty($reflectionClass->getAttributes(Traceable::class));
+        $this->traceAllMethods = $reflectionClass->getAttributes(Traceable::class) !== [];
     }
 
     /**
-     * @param string $method
-     * @param array $arguments
-     * @return mixed
      * @throws \ReflectionException
      * @throws \Throwable
      */
-    public function __call(string $method, array $arguments)
+    public function __call(string $method, array $arguments): mixed
     {
         $reflectionMethod = new ReflectionMethod($this->instance, $method);
         $traceableAttributes = $reflectionMethod->getAttributes(Traceable::class);
-        $traceableMethod = !empty($traceableAttributes);
+        $traceableMethod = $traceableAttributes !== [];
 
         // Set operation name from attribute or use the method name as fallback
         $operationName = $method;

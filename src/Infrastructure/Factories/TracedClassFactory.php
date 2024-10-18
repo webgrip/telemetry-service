@@ -9,17 +9,14 @@ use Webgrip\TelemetryService\Infrastructure\Services\TracingProxy;
 
 class TracedClassFactory
 {
-    private TelemetryServiceInterface $telemetryService;
-
-    public function __construct(TelemetryServiceInterface $telemetryService)
+    public function __construct(private TelemetryServiceInterface $telemetryService)
     {
-        $this->telemetryService = $telemetryService;
     }
 
     public function create(object $instance): object
     {
         $reflectionClass = new ReflectionClass($instance);
-        $hasTraceableAttribute = !empty($reflectionClass->getAttributes(Traceable::class));
+        $hasTraceableAttribute = $reflectionClass->getAttributes(Traceable::class) !== [];
 
         if ($hasTraceableAttribute) {
             return new TracingProxy($instance, $this->telemetryService);

@@ -73,39 +73,35 @@ if [ $# -gt 0 ];then
             ;;
         "doctrine-migrations")
             shift
-            runOnDocker php vendor/bin/doctrine-migrations "$@"
+            runOnDocker php ./vendor/bin/doctrine-migrations "$@"
             ;;
         "console")
             shift
-            runOnDocker php public/console.php  "$@"
+            runOnDocker php ./public/console.php  "$@"
             ;;
         "phpcs")
             shift
-            docker run --rm -it -v $(pwd):/app -w /app php:8.3-cli php vendor/bin/phpcs --standard=phpcs.xml --extensions=php src
+            docker run --rm -it -v $(pwd):/app -w /app php:8.3-cli php ./vendor/bin/phpcs --standard=phpcs.xml --extensions=php ./src
             ;;
         "phpcbf")
             shift
-            docker run --rm -it -v $(pwd):/app -w /app php:8.3-cli php vendor/bin/phpcbf --standard=phpcs.xml --extensions=php src
+            docker run --rm -it -v $(pwd):/app -w /app php:8.3-cli php ./vendor/bin/phpcbf --standard=phpcs.xml --extensions=php ./src
             ;;
         "phpmd")
             shift
-            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/bin/phpmd src text phpmd.xml
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php ./vendor/bin/phpmd src text phpmd.xml
             ;;
         "phpstan")
             shift
-            docker run --rm -it -v $(pwd):/app -w /app php:8.3-fpm php vendor/bin/phpstan analyse src --level 8
+            docker run --rm -it -v $(pwd):/app -w /app php:8.3-fpm php ./vendor/bin/phpstan analyse src --level 8
             ;;
         "psalm")
             shift
-            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php psalm.phar --config=psalm.xml "$@"
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php ./vendor/bin/psalm --config=psalm.xml "$@"
             ;;
         "rector")
             shift
-            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/bin/rector process pub
-            ;;
-        "security-checker")
-            shift
-            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/bin/security-checker security:check composer.lock
+            docker run --rm -itv $(pwd):/app -w /app php:8.3-fpm php vendor/bin/rector process ./src
             ;;
         "composer-normalize")
             shift

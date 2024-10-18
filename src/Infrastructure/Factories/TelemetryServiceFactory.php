@@ -24,11 +24,6 @@ use Webgrip\TelemetryService\Infrastructure\Services\TelemetryService;
 
 final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
 {
-    /**
-     * @param LoggerProviderFactoryInterface $loggerProviderFactory
-     * @param TracerProviderFactoryInterface $tracerProviderFactory
-     * @param ClientInterface $client
-     */
     public function __construct(
         private LoggerProviderFactoryInterface $loggerProviderFactory,
         private TracerProviderFactoryInterface $tracerProviderFactory,
@@ -37,9 +32,6 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
     }
 
     /**
-     * @param ContainerInterface $configuration
-     * @param Logger $logger
-     * @return TelemetryService
      * @throws ContainerExceptionInterface
      * @throws GuzzleException
      * @throws NotFoundExceptionInterface
@@ -63,7 +55,7 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
                 ResourceAttributes::PROCESS_OWNER => get_current_user() ?? null,
                 ResourceAttributes::PROCESS_PID => getmypid() ?? null,
                 ResourceAttributes::PROCESS_RUNTIME_DESCRIPTION => php_uname('m') ?? null,
-                ResourceAttributes::PROCESS_RUNTIME_NAME => php_sapi_name() ?? null,
+                ResourceAttributes::PROCESS_RUNTIME_NAME => PHP_SAPI ?? null,
                 ResourceAttributes::PROCESS_RUNTIME_VERSION => phpversion() ?? null,
 
                 ResourceAttributes::SERVICE_NAMESPACE => $configuration->get('applicationNamespace'),

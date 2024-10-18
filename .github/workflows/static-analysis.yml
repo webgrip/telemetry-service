@@ -34,7 +34,7 @@ jobs:
         if: always()
 
       - name: 'Psalm'
-        run: php ./psalm.phar --config=psalm.xml --output-format=compact --generate-json-map=psalm-output.json
+        run: ./vendor/bin/psalm --config=psalm.xml --output-format=compact --generate-json-map=psalm-output.json
         if: always()
 
       - name: 'Rector'

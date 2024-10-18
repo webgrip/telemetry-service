@@ -13,13 +13,10 @@ use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Webgrip\TelemetryService\Core\Application\Factories\LoggerProviderFactoryInterface;
 
-final class LoggerProviderFactory implements LoggerProviderFactoryInterface
+final readonly class LoggerProviderFactory implements LoggerProviderFactoryInterface
 {
-    /**
-     * @param ContainerInterface $configuration
-     */
     public function __construct(
-        private readonly ContainerInterface $configuration
+        private ContainerInterface $configuration
     ) {
     }
 

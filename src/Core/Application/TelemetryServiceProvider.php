@@ -19,23 +19,16 @@ use Webgrip\TelemetryService\Infrastructure\Factories\TracerProviderFactory;
 
 readonly class TelemetryServiceProvider
 {
-    /**
-     * @param ContainerInterface $configuration
-     */
     public function __construct(
         private ContainerInterface $configuration
     ) {
     }
 
-    /**
-     * @param Container $container
-     * @return void
-     */
     public function register(Container $container): void
     {
         $configuration = $this->configuration;
 
-        $container->set(ResourceInfo::class, function (Container $container) use ($configuration) {
+        $container->set(ResourceInfo::class, function (Container $container) use ($configuration): ResourceInfo {
             $attributes = Attributes::create([
                 ResourceAttributes::DEPLOYMENT_ENVIRONMENT_NAME => $configuration->get('applicationEnvironmentName'),
                 ResourceAttributes::SERVICE_NAMESPACE => $configuration->get('applicationNamespace'),
@@ -46,19 +39,19 @@ readonly class TelemetryServiceProvider
             return ResourceInfo::create($attributes);
         });
 
-        $container->set(LoggerProviderFactoryInterface::class, function (Container $container) use ($configuration) {
+        $container->set(LoggerProviderFactoryInterface::class, function (Container $container) use ($configuration): LoggerProviderFactory {
             return new LoggerProviderFactory(
                 $configuration
             );
         });
 
-        $container->set(TracerProviderFactoryInterface::class, function (Container $container) use ($configuration) {
+        $container->set(TracerProviderFactoryInterface::class, function (Container $container) use ($configuration): TracerProviderFactory {
             return new TracerProviderFactory(
                 $configuration
             );
         });
 
-        $container->set(TelemetryServiceFactoryInterface::class, function (Container $container) {
+        $container->set(TelemetryServiceFactoryInterface::class, function (Container $container): TelemetryServiceFactory {
             return new TelemetryServiceFactory(
                 $container->get(LoggerProviderFactoryInterface::class),
                 $container->get(TracerProviderFactoryInterface::class),

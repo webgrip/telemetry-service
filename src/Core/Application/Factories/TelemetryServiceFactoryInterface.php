@@ -8,10 +8,5 @@ use Webgrip\TelemetryService\Infrastructure\Services\TelemetryService;
 
 interface TelemetryServiceFactoryInterface
 {
-    /**
-     * @param ContainerInterface $configuration
-     * @param LoggerInterface $logger
-     * @return TelemetryService
-     */
     public function create(ContainerInterface $configuration, LoggerInterface $logger): TelemetryService;
 }
