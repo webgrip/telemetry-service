@@ -1,0 +1,16 @@
+concurrency:
+  group: push-${{ github.branch }}
+
+on:
+  push:
+    branches:
+      - '*'
+jobs:
+  static-analysis:
+    uses: ./.github/workflows/static-analysis.yml
+  tests:
+    uses: ./.github/workflows/tests.yml
+#  deploy:
+#    needs: [ static-analysis, tests ]
+#    if: always() && needs.tests.result == 'success'
+#    uses: ./.github/workflows/deploy.yml

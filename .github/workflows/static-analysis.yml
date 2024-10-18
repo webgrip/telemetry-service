@@ -1,0 +1,46 @@
+on:
+  workflow_call:
+
+jobs:
+  static-analysis:
+    name: 'Static Analysis'
+    runs-on: self-hosted
+    environment: ${{ inputs.github-environment }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: 'Install dependencies'
+        run: composer install --prefer-dist --no-interaction
+        if: always()
+
+      - name: 'PHPCS'
+        run: ./vendor/bin/phpcs -q -s --standard=./phpcs.xml ./src --report=full --exclude=Generic.Files.LineLength
+        if: always()
+
+      - name: 'PHPCS (Ignore Annotations)'
+        run: ./vendor/bin/phpcs -q -s --standard=./phpcs.xml ./src --report=full --ignore-annotations
+        if: always()
+
+      - name: 'PHPMD'
+        run: ./vendor/bin/phpmd --strict --color ./src text ./phpmd.xml
+        if: always()
+
+      - name: 'PHPStan'
+        run: ./vendor/bin/phpstan --configuration=./phpstan.neon analyse ./src --level 8 --error-format=table
+        if: always()
+
+      - name: 'Psalm'
+        run: php ./psalm.phar --config=psalm.xml --output-format=compact --generate-json-map=psalm-output.json
+        if: always()
+
+      - name: 'Rector'
+        run: ./vendor/bin/rector --config=./rector.php process ./src --dry-run
+        if: always()
+
+      - name: 'Composer Normalize''
+        run: composer normalize
+        if: always()
