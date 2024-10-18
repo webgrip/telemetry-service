@@ -80,6 +80,7 @@ class Foo
 ```
 }
 
+
 // DI configuration
 return [
     Foo::class => function (\DI\Container $container) {
