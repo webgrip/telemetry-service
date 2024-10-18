@@ -24,14 +24,21 @@ final readonly class TelemetryService implements TelemetryServiceInterface
     public function __construct(
         private LoggerProviderInterface $loggerProvider,
         private TracerProviderInterface $tracerProvider,
-        private Logger $logger,
+        private LoggerInterface $logger,
     ) {
-        $this->logger->pushHandler(
-            new Handler(
-                $this->loggerProvider,
-                Level::Debug
-            )
-        );
+        $this->hookLoggerIntoMonolog();
+    }
+
+    public function hookLoggerIntoMonolog(): void
+    {
+        if ($this->loggerProvider instanceof Logger) {
+            $this->$this->logger->pushHandler(
+                new Handler(
+                    $this->loggerProvider,
+                    Level::Debug
+                )
+            );
+        }
     }
 
     /**

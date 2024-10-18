@@ -2,16 +2,16 @@
 
 namespace Webgrip\TelemetryService\Core\Application\Factories;
 
-use Monolog\Logger;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use Webgrip\TelemetryService\Infrastructure\Services\TelemetryService;
 
 interface TelemetryServiceFactoryInterface
 {
     /**
      * @param ContainerInterface $configuration
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      * @return TelemetryService
      */
-    public function create(ContainerInterface $configuration, Logger $logger): TelemetryService;
+    public function create(ContainerInterface $configuration, LoggerInterface $logger): TelemetryService;
 }

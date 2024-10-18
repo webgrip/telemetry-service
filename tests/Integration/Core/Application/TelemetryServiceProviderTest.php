@@ -2,31 +2,40 @@
 
 namespace Webgrip\TelemetryService\Tests\Integration\Core\Application;
 
+use DI\Container;
+use Monolog\Logger;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
+use Webgrip\TelemetryService\Core\Application\TelemetryServiceProvider;
+use Webgrip\TelemetryService\Core\Domain\Services\TelemetryServiceInterface;
+use Webgrip\TelemetryService\Infrastructure\Configuration;
+
 class TelemetryServiceProviderTest extends \Webgrip\TelemetryService\Tests\Unit\TestCase
 {
     public function testRegister(): void
     {
+        $container = new Container();
 
-        $container = new \DI\Container();
+        $container->set(
+            LoggerInterface::class,
+            new NullLogger()
+        );
 
-        $container->set('config', function() {
-            return [
-                'applicationEnvironmentName' => 'production',
-                'applicationNamespace' => 'com.example',
-                'applicationName' => 'TestApp',
-                'applicationVersion' => '1.0.0',
-                'otelCollectorHost' => 'localhost',
-            ];
-        });
+        $configuration = new Configuration(
+            'production',
+            'com.example',
+            'TestApp',
+            '1.0.0',
+            'localhost',
+        );
 
-        $configuration = $container->get('config');
-
-        $telemetryServiceProvider = new \Webgrip\TelemetryService\Core\Application\TelemetryServiceProvider($configuration);
-
+        $telemetryServiceProvider = new TelemetryServiceProvider($configuration);
         $telemetryServiceProvider->register($container);
 
-        $telemetryService = $container->get(\Webgrip\TelemetryService\Core\Domain\Services\TelemetryServiceInterface::class);
-
-        $telemetryService->
+        $this->assertInstanceOf(
+            TelemetryServiceInterface::class,
+            $container->get(TelemetryServiceInterface::class)
+        );
     }
 }

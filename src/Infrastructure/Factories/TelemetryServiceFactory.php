@@ -15,6 +15,7 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Webgrip\TelemetryService\Core\Application\Factories\LoggerProviderFactoryInterface;
 use Webgrip\TelemetryService\Core\Application\Factories\TelemetryServiceFactoryInterface;
@@ -45,7 +46,7 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
      */
     public function create(
         ContainerInterface $configuration,
-        Logger $logger
+        LoggerInterface $logger
     ): TelemetryService {
         $resourceInfo = ResourceInfo::create(
             Attributes::create([
