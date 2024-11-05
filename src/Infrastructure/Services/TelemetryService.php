@@ -29,7 +29,7 @@ final readonly class TelemetryService implements TelemetryServiceInterface
 
     public function hookLoggerIntoMonolog(): void
     {
-        if ($this->loggerProvider instanceof Logger) {
+        if ($this->logger instanceof Logger) {
             $this->logger->pushHandler(
                 new Handler(
                     $this->loggerProvider,
