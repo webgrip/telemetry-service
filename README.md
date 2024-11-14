@@ -1,8 +1,7 @@
-#prerequisites
+# Prerequisites
 
 - PHP 8.2
 - Composer
-
 
 # How to use
 
@@ -56,13 +55,11 @@ class Foo
 }
 ```
 
-
 ### Using attributes
 > You can add the attribute 'Webgrip\TelemetryService\Core\Domain\Services\Traceable' to your class to automatically trace all methods of the class
 > You can also use this attribute to trace a single method
 
 ```php
-
 #[\Webgrip\TelemetryService\Core\Domain\Attributes\Traceable]
 class Foo
 {
@@ -78,9 +75,8 @@ class Foo
     }
 }
 ```
-}
 
-
+```php
 // DI configuration
 return [
     Foo::class => function (\DI\Container $container) {
