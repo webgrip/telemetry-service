@@ -1,6 +1,6 @@
 <?php
 
-namespace Webgrip\TelemetryService\Tests\Unit\Infrastructure\Services;
+namespace Webgrip\TelemetryService\Tests\Integration\Infrastructure\Services;
 
 use Monolog\Logger;
 use OpenTelemetry\API\Logs\LoggerProviderInterface;
