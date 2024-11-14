@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: telemetry-service
+  namespace: webgrip
+  title: Telemetry Service
+  description: |
+    The Telemetry Service is a wrapper for LoggerInterface, TracerInterface, and (eventually) MetricInterface for PHP.
+    It provides a simple way to send logs, traces, and metrics to an otel collector.
+  labels:
+    tier: "3"
+  annotations:
+    github.com/project-slug: webgrip/telemetry-service
+    backstage.io/techdocs-ref: dir:.
+    simpleicons.org/icon-slug: php
+  tags:
+    - php
+    - telemetry
+    - monitoring
+  links:
+    - url: https://github.com/webgrip/webhook-initializer
+      title: Source Code
+      icon: github
+      type: source
+spec:
+  type: service
+  lifecycle: development
+  owner: group:webgrip/infrastructure
+  system: monitoring-platform-system
