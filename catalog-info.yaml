@@ -1,0 +1,21 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: telemetry-service
+  namespace: webgrip
+  title: Telemetry Service
+  description: |
+    The telemetry service is a PHP library that provides a simple way to collect telemetry data and send it opentelemetry.io.
+  labels:
+    tier: "2"
+  annotations:
+    backstage.io/adr-location: docs/adrs
+    github.com/project-slug: webgrip/telemetry-service
+    simpleicons.org/icon-slug: opentelemetry
+  tags:
+    - php
+    - telemetry
+spec:
+  type: library
+  lifecycle: production
+  owner: group:webgrip/infrastructure
