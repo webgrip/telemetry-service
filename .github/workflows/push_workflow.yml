@@ -18,7 +18,7 @@ jobs:
     uses: webgrip/workflows/.github/workflows/static-analysis.yml@main
 
   tests:
-    needs: [ static-analysis ]
+    needs: [ build, static-analysis ]
     uses: webgrip/workflows/.github/workflows/tests.yml@main
 
 #  deploy:
