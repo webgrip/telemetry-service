@@ -17,8 +17,10 @@ jobs:
     needs: [ build ]
     uses: webgrip/workflows/.github/workflows/static-analysis.yml@main
 
-#  tests:
-#    uses: webgrip/workflows/.github/workflows/tests.yml@main
+  tests:
+    needs: [ static-analysis ]
+    uses: webgrip/workflows/.github/workflows/tests.yml@main
+
 #  deploy:
 #    needs: [ static-analysis, tests ]
 #    if: always() && needs.tests.result == 'success'
