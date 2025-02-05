@@ -58,8 +58,5 @@
             "tbachert/spi": true,
             "ergebnis/composer-normalize": true
         }
-    },
-    "repositories": [
-        {"packagist.org": true}
-    ]
+    }
 }
