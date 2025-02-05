@@ -60,7 +60,6 @@
         }
     },
     "repositories": [
-        {"type": "composer", "url": "https://repo.packagist.com/webgrip/"},
-        {"packagist.org": false}
+        {"packagist.org": true}
     ]
 }

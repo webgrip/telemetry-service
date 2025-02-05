@@ -11,10 +11,10 @@ jobs:
     name: "Build"
     uses: webgrip/workflows/.github/workflows/build.yml@main
 
+  static-analysis:
+    name: "Static Analysis"
+    uses: webgrip/workflows/.github/workflows/static-analysis.yml@main
 
-#  static-analysis:
-#    uses: webgrip/workflows/.github/workflows/static-analysis.yml@main
-#
 #  tests:
 #    uses: webgrip/workflows/.github/workflows/tests.yml@main
 #  deploy:
