@@ -8,6 +8,7 @@ concurrency:
 
 jobs:
   build:
+    name: "Build"
     uses: webgrip/workflows/.github/workflows/build.yml@main
 
 #  static-analysis:
