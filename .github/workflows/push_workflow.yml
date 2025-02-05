@@ -6,7 +6,7 @@ concurrency:
 
 jobs:
   build:
-    uses: webgrip/workflows/.github/workflows/php/8.2/build.yml@main
+    uses: webgrip/workflows/.github/workflows/build.yml@main
 
 #  static-analysis:
 #    uses: webgrip/workflows/.github/workflows/static-analysis.yml@main
