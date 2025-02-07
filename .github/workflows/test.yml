@@ -1,0 +1,16 @@
+name: Test ARC
+
+on:
+  push:
+  workflow_dispatch:
+
+concurrency:
+    group: push-${{ github.branch }}
+
+jobs:
+  test:
+    runs-on: arc-runner-set
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - run: echo "Hello, World!"
