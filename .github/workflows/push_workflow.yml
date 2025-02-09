@@ -10,16 +10,16 @@ concurrency:
 jobs:
   build:
     name: "Build"
-    uses: webgrip/workflows/.github/workflows/build-dependencies/composer-install.yml@main
+    uses: webgrip/workflows/.github/workflows/composer-install.yml@main
 
   static-analysis:
     name: "Static Analysis"
     needs: [ build ]
-    uses: webgrip/workflows/.github/workflows/static-analysis/php.yml@main
+    uses: webgrip/workflows/.github/workflows/static-analysis.yml@main
 
   tests:
     needs: [ build, static-analysis ]
-    uses: webgrip/workflows/.github/workflows/tests/php.yml@main
+    uses: webgrip/workflows/.github/workflows/tests.yml@main
 
 #  deploy:
 #    needs: [ static-analysis, tests ]
