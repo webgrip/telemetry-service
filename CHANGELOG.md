@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/webgrip/telemetry-service/compare/v1.0.0...v1.0.1) (2025-02-26)
+
+
+### Bug Fixes
+
+* Removed version from composer.json due to warning issued here https://getcomposer.org/doc/04-schema.md#version ([5826e94](https://github.com/webgrip/telemetry-service/commit/5826e94c3903b9098c4478f8560363766a0cd861))
+
 # 1.0.0 (2025-02-26)
 
 
