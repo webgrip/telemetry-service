@@ -5,8 +5,11 @@ namespace Webgrip\TelemetryService\Tests\Integration\Infrastructure\Factories;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use http\Client;
 use OpenTelemetry\API\Logs\LoggerProviderInterface;
 use OpenTelemetry\API\Trace\TracerProviderInterface;
+use OpenTelemetry\SDK\Logs\LoggerProvider;
+use OpenTelemetry\SDK\Trace\TracerProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -42,12 +45,12 @@ class TelemetryServiceFactoryTest extends TestCase
 
         $this->configuration = $this->createMock(ContainerInterface::class);
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->client = $this->createMock(ClientInterface::class);
+        $this->client = $this->createMock(\GuzzleHttp\Client::class);
         $this->loggerProviderFactory = $this->createMock(LoggerProviderFactoryInterface::class);
         $this->tracerProviderFactory = $this->createMock(TracerProviderFactoryInterface::class);
     }
 
-    public function testCreateWithoutOtelCollectorHost(): void
+    public function testWhenOtelCollectorIsNotPresentThenLogErrorButDoNotThrowException(): void
     {
         $this->configuration->method('get')
             ->willReturnMap([
@@ -71,8 +74,17 @@ class TelemetryServiceFactoryTest extends TestCase
         $telemetryService = $factory->create($this->configuration, $this->logger);
 
         $this->assertInstanceOf(TelemetryService::class, $telemetryService);
-        $this->assertInstanceOf(NoopLoggerProvider::class, $telemetryService->getLoggerProvider());
-        $this->assertInstanceOf(NoopTracerProvider::class, $telemetryService->getTracerProvider());
+
+        $reflection = new \ReflectionClass($telemetryService);
+        $loggerProviderProperty = $reflection->getProperty('loggerProvider');
+        $loggerProviderProperty->setAccessible(true);
+        $loggerProvider = $loggerProviderProperty->getValue($telemetryService);
+        $this->assertInstanceOf(NoopLoggerProvider::class, $loggerProvider);
+
+        $tracerProviderProperty = $reflection->getProperty('tracerProvider');
+        $tracerProviderProperty->setAccessible(true);
+        $tracerProvider = $tracerProviderProperty->getValue($telemetryService);
+        $this->assertInstanceOf(NoopTracerProvider::class, $tracerProvider);
     }
 
     public function testCreateWithHealthCheckFailure(): void
@@ -106,8 +118,17 @@ class TelemetryServiceFactoryTest extends TestCase
         $telemetryService = $factory->create($this->configuration, $this->logger);
 
         $this->assertInstanceOf(TelemetryService::class, $telemetryService);
-        $this->assertInstanceOf(NoopLoggerProvider::class, $telemetryService->getLoggerProvider());
-        $this->assertInstanceOf(NoopTracerProvider::class, $telemetryService->getTracerProvider());
+
+        $reflection = new \ReflectionClass($telemetryService);
+        $loggerProviderProperty = $reflection->getProperty('loggerProvider');
+        $loggerProviderProperty->setAccessible(true);
+        $loggerProvider = $loggerProviderProperty->getValue($telemetryService);
+        $this->assertInstanceOf(NoopLoggerProvider::class, $loggerProvider);
+
+        $tracerProviderProperty = $reflection->getProperty('tracerProvider');
+        $tracerProviderProperty->setAccessible(true);
+        $tracerProvider = $tracerProviderProperty->getValue($telemetryService);
+        $this->assertInstanceOf(NoopTracerProvider::class, $tracerProvider);
     }
 
     public function testCreateWithHealthCheckSuccess(): void
@@ -143,7 +164,16 @@ class TelemetryServiceFactoryTest extends TestCase
         $telemetryService = $factory->create($this->configuration, $this->logger);
 
         $this->assertInstanceOf(TelemetryService::class, $telemetryService);
-        $this->assertSame($loggerProvider, $telemetryService->getLoggerProvider());
-        $this->assertSame($tracerProvider, $telemetryService->getTracerProvider());
+
+        $reflection = new \ReflectionClass($telemetryService);
+        $reflectionLoggerProviderProperty = $reflection->getProperty('loggerProvider');
+        $reflectionLoggerProviderProperty->setAccessible(true);
+        $reflectionLoggerProvider = $reflectionLoggerProviderProperty->getValue($telemetryService);
+        $this->assertEquals($loggerProvider, $reflectionLoggerProvider);
+
+        $reflectionTracerProviderProperty = $reflection->getProperty('tracerProvider');
+        $reflectionTracerProviderProperty->setAccessible(true);
+        $reflectionTracerProvider = $reflectionTracerProviderProperty->getValue($telemetryService);
+        $this->assertEquals($tracerProvider, $reflectionTracerProvider);
     }
 }
