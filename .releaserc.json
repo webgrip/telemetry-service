@@ -4,7 +4,7 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     [
-      "semantic-release/exec",
+      "@semantic-release/exec",
       {
         "prepareCmd": "php -r \"$composer = json_decode(file_get_contents('composer.json'), true); $composer['version'] = '$nextRelease.version'; file_put_contents('composer.json', json_encode($composer, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));\""
       }
