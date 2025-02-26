@@ -8,6 +8,7 @@ on:
     paths:
       - 'ops/**'
       - 'src/**'
+      - 'tests/**'
       - 'composer.json'
       - 'composer.lock'
       - '.github/workflows/on_source_change.yml'
