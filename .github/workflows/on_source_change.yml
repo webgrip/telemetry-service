@@ -1,12 +1,17 @@
-name: "[Workflow] On Push"
-
-on:
-  push:
-  workflow_dispatch:
-
 concurrency:
   group: push-${{ github.branch }}
 
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'ops/**'
+      - 'src/**'
+      - 'composer.json'
+      - 'composer.lock'
+      - '.github/workflows/on_source_change.yml'
+      - '.github/workflows/release.yml'
 jobs:
   build:
     name: "Build"
@@ -22,7 +27,7 @@ jobs:
     needs: [ build, static-analysis ]
     uses: webgrip/workflows/.github/workflows/tests.yml@main
 
-#  deploy:
-#    needs: [ static-analysis, tests ]
-#    if: always() && needs.tests.result == 'success'
-#    uses: ./.github/workflows/deploy.yml
+  release:
+    needs: [ static-analysis, tests ]
+    if: always() && needs.tests.result == 'success'
+    uses: ./.github/workflows/release.yml
