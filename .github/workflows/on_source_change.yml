@@ -35,7 +35,8 @@ jobs:
     needs: [ build, static-analysis ]
     uses: webgrip/workflows/.github/workflows/tests.yml@main
 
-  release:
+  semantic-release:
+    name: "Semantic Release"
     needs: [ static-analysis, tests ]
     if: always() && needs.tests.result == 'success'
-    uses: ./.github/workflows/release.yml
+    uses: webgrip/workflows/.github/workflows/semantic-release.yml@main
