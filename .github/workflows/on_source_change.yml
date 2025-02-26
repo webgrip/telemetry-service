@@ -12,6 +12,12 @@ on:
       - 'composer.lock'
       - '.github/workflows/on_source_change.yml'
       - '.github/workflows/release.yml'
+      - 'phpcs.xml'
+      - 'phpmd.xml'
+      - 'phpstan.neon'
+      - 'phpunit.xml.dist'
+      - 'psalm.xml'
+      - 'rector.php'
 jobs:
   build:
     name: "Build"

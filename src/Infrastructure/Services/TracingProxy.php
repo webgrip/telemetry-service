@@ -11,9 +11,7 @@ use Webgrip\TelemetryService\Core\Domain\Services\TracingProxyInterface;
 
 class TracingProxy implements TracingProxyInterface
 {
-
     public SpanInterface $span;
-
 
     private bool $traceAllMethods;
 
