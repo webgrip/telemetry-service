@@ -1,3 +1,5 @@
+name: '[Workflow] On Source Change'
+
 concurrency:
   group: push-${{ github.branch }}
 
@@ -22,21 +24,21 @@ on:
       - 'rector.php'
 jobs:
   build:
-    name: "Build"
+    name: 'Build'
     uses: webgrip/workflows/.github/workflows/composer-install.yml@main
 
   static-analysis:
-    name: "Static Analysis"
+    name: 'Static Analysis'
     needs: [ build ]
     uses: webgrip/workflows/.github/workflows/static-analysis.yml@main
 
   tests:
-    name: "Tests"
+    name: 'Tests'
     needs: [ build, static-analysis ]
     uses: webgrip/workflows/.github/workflows/tests.yml@main
 
   semantic-release:
-    name: "Semantic Release"
+    name: 'Semantic Release'
     needs: [ static-analysis, tests ]
     if: always() && needs.tests.result == 'success' && github.ref == 'refs/heads/main'
     uses: webgrip/workflows/.github/workflows/semantic-release.yml@main

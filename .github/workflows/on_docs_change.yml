@@ -1,4 +1,4 @@
-name: "[Workflow] On Documentation Change"
+name: '[Workflow] On Documentation Change'
 
 on:
   push:
