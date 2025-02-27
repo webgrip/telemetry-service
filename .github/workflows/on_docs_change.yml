@@ -17,6 +17,7 @@ on:
 
 jobs:
   update-techdocs:
+    name: 'Update TechDocs'
     uses: webgrip/workflows/.github/workflows/update_techdocs.yml@main
     with:
       source-dir: ${{ github.event.inputs.source-dir || 'docs/techdocs' }}
