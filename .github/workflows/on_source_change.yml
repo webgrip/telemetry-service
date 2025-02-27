@@ -4,7 +4,7 @@ concurrency:
 on:
   push:
     branches:
-      - 'main'
+      - '*'
     paths:
       - 'ops/**'
       - 'src/**'
@@ -38,5 +38,5 @@ jobs:
   semantic-release:
     name: "Semantic Release"
     needs: [ static-analysis, tests ]
-    if: always() && needs.tests.result == 'success'
+    if: always() && needs.tests.result == 'success' && github.ref == 'refs/heads/main'
     uses: webgrip/workflows/.github/workflows/semantic-release.yml@main
