@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/webgrip/telemetry-service/compare/v1.0.1...1.0.2) (2025-03-03)
+
+
+### Bug Fixes
+
+* **workflows:** Added version to workflow output and forego the "v" prefix on the released tags ([2b66964](https://github.com/webgrip/telemetry-service/commit/2b66964102dff7e0e166f95b1877b0fc89cedf86))
+
 ## [1.0.1](https://github.com/webgrip/telemetry-service/compare/v1.0.0...v1.0.1) (2025-02-26)
 
 
