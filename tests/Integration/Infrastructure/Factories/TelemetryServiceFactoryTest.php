@@ -5,11 +5,8 @@ namespace Webgrip\TelemetryService\Tests\Integration\Infrastructure\Factories;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use http\Client;
 use OpenTelemetry\API\Logs\LoggerProviderInterface;
 use OpenTelemetry\API\Trace\TracerProviderInterface;
-use OpenTelemetry\SDK\Logs\LoggerProvider;
-use OpenTelemetry\SDK\Trace\TracerProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -101,13 +98,6 @@ class TelemetryServiceFactoryTest extends TestCase
 
         $this->client->method('get')
             ->willThrowException(new ConnectException('Connection refused', new Request('GET', '')));
-
-        $this->logger->expects($this->once())
-            ->method('warning')
-            ->with(
-                $this->stringContains('Health check for telemetry collector to http://' . $otelCollectorHost . ':13133 failed with exception'),
-                $this->arrayHasKey('exception')
-            );
 
         $factory = new TelemetryServiceFactory(
             $this->loggerProviderFactory,

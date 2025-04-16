@@ -116,10 +116,6 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
                 return false;
             }
         } catch (GuzzleException | CancellationException $e) {
-            $logger->warning(
-                'Health check for telemetry collector to ' . $healthCheckUrl . ' failed with exception: ' . $e->getMessage(),
-                ['exception' => $e]
-            );
             return false;
         }
 
