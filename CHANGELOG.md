@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/webgrip/telemetry-service/compare/1.0.2...1.0.3) (2025-04-16)
+
+
+### Bug Fixes
+
+* **backstage:** Removed duplicated file [skip-ci] ([0020630](https://github.com/webgrip/telemetry-service/commit/002063052f2276f45f9e959e4a4357a703b47cfa))
+* No longer log a warning when the otel collector is not found ([a6616ed](https://github.com/webgrip/telemetry-service/commit/a6616ed9861a6f147dc43fbdb801933226158a4c))
+
 ## [1.0.2](https://github.com/webgrip/telemetry-service/compare/v1.0.1...1.0.2) (2025-03-03)
 
 
