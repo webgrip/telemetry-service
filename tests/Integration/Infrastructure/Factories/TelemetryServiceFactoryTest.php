@@ -47,7 +47,7 @@ class TelemetryServiceFactoryTest extends TestCase
         $this->tracerProviderFactory = $this->createMock(TracerProviderFactoryInterface::class);
     }
 
-    public function testWhenOtelCollectorIsNotPresentThenLogErrorButDoNotThrowException(): void
+    public function testWhenOtelCollectorIsNotPresentThenLogWarningButDoNotThrowException(): void
     {
         $this->configuration->method('get')
             ->willReturnMap([
@@ -59,7 +59,7 @@ class TelemetryServiceFactoryTest extends TestCase
             ]);
 
         $this->logger->expects($this->once())
-            ->method('error')
+            ->method('warning')
             ->with('Telemetry collector host (otelCollectorHost) is not configured.');
 
         $factory = new TelemetryServiceFactory(
