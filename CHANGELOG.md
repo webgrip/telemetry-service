@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/webgrip/telemetry-service/compare/1.0.3...1.0.4) (2025-05-27)
+
+
+### Bug Fixes
+
+* Fixed test ([5243511](https://github.com/webgrip/telemetry-service/commit/52435115d8ab0931504217b3bfb11885803f0704))
+* Log a warning instead of an error when the collector is not configured ([fb542f7](https://github.com/webgrip/telemetry-service/commit/fb542f7dad741e2408eb0b499798f6fabe827f8c))
+
 ## [1.0.3](https://github.com/webgrip/telemetry-service/compare/1.0.2...1.0.3) (2025-04-16)
 
 
