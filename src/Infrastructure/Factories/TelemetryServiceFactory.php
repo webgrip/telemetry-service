@@ -43,7 +43,7 @@ final class TelemetryServiceFactory implements TelemetryServiceFactoryInterface
             empty($otelCollectorHost) ||
             !$this->collectorIsHealthy($otelCollectorHost, $logger)
         ) {
-            $logger->error('Telemetry collector host (otelCollectorHost) is not configured.');
+            $logger->warning('Telemetry collector host (otelCollectorHost) is not configured.');
             return $this->createNoopTelemetryService($logger);
         }
 
