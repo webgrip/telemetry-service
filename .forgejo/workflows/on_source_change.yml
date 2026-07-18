@@ -61,3 +61,5 @@ jobs:
           token: ${{ secrets.FORGEJO_TOKEN }}
 
 # revalidate against fixed reusables
+
+# revalidate: composer-normalize fix (workflows 6f70fe1)
