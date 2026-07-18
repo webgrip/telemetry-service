@@ -1,0 +1,41 @@
+name: probe-techdocs
+on:
+  push:
+    branches: [techdocs-probe]
+jobs:
+  has-git:
+    runs-on: docker
+    container:
+      image: webgrip/techdocs-runner:latest
+    steps:
+      - run: command -v git
+  has-node:
+    runs-on: docker
+    container:
+      image: webgrip/techdocs-runner:latest
+    steps:
+      - run: command -v node && node --version
+  capture:
+    runs-on: docker
+    container:
+      image: webgrip/techdocs-runner:latest
+    steps:
+      - name: inventory + techdocs build attempt -> ci-diag (only lands if git exists)
+        run: |
+          set +e
+          git config --global --add safe.directory "$PWD" 2>/dev/null
+          git clone --depth 5 --branch techdocs-probe "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git" . >/dev/null 2>&1 || exit 0
+          {
+            echo "===== tools ====="
+            for t in git node npm python3 pip3 mkdocs techdocs-cli java; do printf '%s: ' "$t"; command -v "$t" || echo MISSING; done
+            echo; echo "===== techdocs-cli generate (tail 60) ====="
+            cd docs/techdocs 2>/dev/null || { echo "NO docs/techdocs DIR"; ls -la; }
+            techdocs-cli generate --no-docker --source-dir . --output-dir /tmp/site 2>&1 | tail -60
+            echo "GEN_EXIT=$?"
+          } > "$GITHUB_WORKSPACE/techdocs-diag.log" 2>&1
+          cd "$GITHUB_WORKSPACE"
+          git config user.email ci@webgrip.dev; git config user.name webgrip-ci
+          git checkout -B ci-diag
+          git add -f techdocs-diag.log
+          git commit -qm "probe: techdocs diag [skip ci]" || true
+          git push -f origin ci-diag || true
