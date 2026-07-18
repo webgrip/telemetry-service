@@ -59,3 +59,5 @@ jobs:
         uses: https://forgejo.webgrip.dev/webgrip/workflows/.forgejo/composite-actions/semantic-release@main
         with:
           token: ${{ secrets.FORGEJO_TOKEN }}
+
+# trigger check b3bab3d
