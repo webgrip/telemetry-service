@@ -1,15 +1,12 @@
 name: '[Workflow] On Documentation Change'
 
-# Forgejo mirror of .github/workflows/on_docs_change.yml. The update_techdocs reusable requires the
-# CI bot's FORGEJO_TOKEN (it pushes the built site to the pages branch — replaces GITHUB_TOKEN).
-
 on:
   push:
     branches:
       - 'main'
     paths:
       - 'docs/techdocs/**'
-      - '.forgejo/workflows/on_docs_change.yml'
+      - '.github/workflows/on_docs_change.yml'
   workflow_dispatch:
     inputs:
       source-dir:
@@ -21,8 +18,6 @@ on:
 jobs:
   update-techdocs:
     name: 'Update TechDocs'
-    uses: webgrip/workflows/.forgejo/workflows/update_techdocs.yml@main
+    uses: webgrip/workflows/.github/workflows/update_techdocs.yml@main
     with:
       source-dir: ${{ github.event.inputs.source-dir || 'docs/techdocs' }}
-    secrets:
-      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
