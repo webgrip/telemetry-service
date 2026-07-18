@@ -25,4 +25,4 @@ jobs:
     with:
       source-dir: ${{ github.event.inputs.source-dir || 'docs/techdocs' }}
     secrets:
-      FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+      FORGEJO_TOKEN: ${{ secrets.WEBGRIP_CI_TOKEN }}

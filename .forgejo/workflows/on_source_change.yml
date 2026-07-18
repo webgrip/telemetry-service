@@ -58,4 +58,4 @@ jobs:
       - name: Semantic Release
         uses: https://forgejo.webgrip.dev/webgrip/workflows/.forgejo/composite-actions/semantic-release@main
         with:
-          token: ${{ secrets.FORGEJO_TOKEN }}
+          token: ${{ secrets.WEBGRIP_CI_TOKEN }}
