@@ -1,0 +1,43 @@
+===== php version =====
+PHP 8.4.4 (cli) (built: Feb 14 2025 19:20:45) (NTS)
+Copyright (c) The PHP Group
+Built by https://github.com/docker-library/php
+Zend Engine v4.4.4, Copyright (c) Zend Technologies
+
+===== php extensions =====
+[PHP Modules] bz2 Core ctype curl date dom fileinfo filter hash iconv json libxml mbstring mysqlnd openssl pcre PDO pdo_sqlite Phar posix random readline Reflection session SimpleXML sodium SPL sqlite3 standard tokenizer xml xmlreader xmlwriter zip zlib  [Zend Modules]  
+
+===== composer install (tail) =====
+  - Installing symfony/var-dumper (v7.2.3): Extracting archive
+  - Installing thecodingmachine/phpstan-strict-rules (v1.0.0): Extracting archive
+  - Installing symfony/polyfill-php84 (v1.31.0): Extracting archive
+  - Installing symfony/console (v7.2.1): Extracting archive
+  - Installing spatie/array-to-xml (3.4.0): Extracting archive
+  - Installing netresearch/jsonmapper (v5.0.0): Extracting archive
+  - Installing fidry/cpu-core-counter (1.2.0): Extracting archive
+  - Installing felixfbecker/language-server-protocol (v1.5.3): Extracting archive
+  - Installing dnoegel/php-xdg-base-dir (v0.1.1): Extracting archive
+  - Installing danog/advanced-json-rpc (v3.2.2): Extracting archive
+  - Installing amphp/parallel (v2.3.1): Extracting archive
+  - Installing vimeo/psalm (6.x-dev 1361cd3): Extracting archive
+Generating autoload files
+81 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+COMPOSER_EXIT=0
+
+===== phpunit --version =====
+PHPUnit 11.5.10 by Sebastian Bergmann and contributors.
+
+
+===== phpunit unit suite (tail 80) =====
+PHPUnit 11.5.10 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.4.4
+Configuration: /workspace/webgrip/telemetry-service/phpunit.xml.dist
+
+..........                                                        10 / 10 (100%)
+
+Time: 00:00.033, Memory: 12.00 MB
+
+OK (10 tests, 15 assertions)
+PHPUNIT_EXIT=0
