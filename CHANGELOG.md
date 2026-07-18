@@ -1,3 +1,5 @@
+## [1.0.5](http://forgejo-http.forgejo.svc.cluster.local:3000/webgrip/telemetry-service/compare/1.0.4...1.0.5) (2026-07-18)
+
 ## [1.0.4](https://github.com/webgrip/telemetry-service/compare/1.0.3...1.0.4) (2025-05-27)
 
 
