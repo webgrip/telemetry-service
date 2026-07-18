@@ -1,0 +1,44 @@
+name: probe-tests
+on:
+  push:
+    branches: [chore/forgejo-ci-port]
+    paths: ['.forgejo/workflows/_probe_tests.yml']
+jobs:
+  probe-tests:
+    name: probe-tests-in-container
+    runs-on: docker
+    container:
+      image: composer:2.8.5
+    steps:
+      - name: clone, install, run phpunit — capture everything
+        env:
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
+        run: |
+          set +e
+          git config --global --add safe.directory "$PWD"
+          url="$(printf '%s' "${GITHUB_SERVER_URL}" | sed "s#://#://token:${FORGEJO_TOKEN}@#")/${GITHUB_REPOSITORY}.git"
+          git clone --depth 50 --branch "${GITHUB_REF_NAME}" "$url" . >/dev/null 2>&1
+          {
+            echo "===== php version ====="
+            php -v
+            echo
+            echo "===== php extensions ====="
+            php -m | tr '\n' ' '
+            echo; echo
+            echo "===== composer install (tail) ====="
+            composer install --prefer-dist --no-interaction --ignore-platform-reqs 2>&1 | tail -15
+            echo "COMPOSER_EXIT=$?"
+            echo
+            echo "===== phpunit --version ====="
+            ./vendor/bin/phpunit --version 2>&1 | head -5
+            echo
+            echo "===== phpunit unit suite (tail 80) ====="
+            ./vendor/bin/phpunit -c ./phpunit.xml.dist --testsuite unit --fail-on-risky 2>&1 | tail -80
+            echo "PHPUNIT_EXIT=${PIPESTATUS[0]}"
+          } > tests-diag.log 2>&1
+          git config user.email ci@webgrip.dev
+          git config user.name webgrip-ci
+          git checkout -B ci-diag
+          git add -f tests-diag.log
+          git commit -q -m "probe: tests diag [skip ci]" || true
+          git push -f origin ci-diag
