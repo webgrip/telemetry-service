@@ -26,3 +26,5 @@ jobs:
       source-dir: ${{ github.event.inputs.source-dir || 'docs/techdocs' }}
     secrets:
       FORGEJO_TOKEN: ${{ secrets.WEBGRIP_CI_TOKEN }}
+
+# retrigger: update_techdocs git-ensure fix (workflows 22981b7)
