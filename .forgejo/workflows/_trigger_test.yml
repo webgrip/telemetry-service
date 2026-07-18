@@ -1,0 +1,8 @@
+name: trigger-test
+on:
+  push:
+jobs:
+  ping:
+    runs-on: docker
+    steps:
+      - run: echo hello
