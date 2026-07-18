@@ -1,0 +1,61 @@
+name: '[Workflow] On Source Change'
+
+# Forgejo mirror of .github/workflows/on_source_change.yml. Adaptations (forgejo-port-workflows):
+#   - reusables resolve against the webgrip/workflows .forgejo/ tree
+#   - the release job is a normal `runs-on: docker` job calling the shared composite action with the
+#     CI bot's FORGEJO_TOKEN (a job-level semantic-release.yml reusable would collide with its inner
+#     `semantic-release` job id under Forgejo v15's job flattening)
+#   - semantic-release publishes via the Gitea plugin (shared .releaserc.js gates on GITEA_ACTIONS)
+
+concurrency:
+  group: push-${{ github.ref_name }}
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'ops/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'composer.json'
+      - 'composer.lock'
+      - '.releaserc.js'
+      - '.forgejo/workflows/on_source_change.yml'
+      - 'phpcs.xml'
+      - 'phpmd.xml'
+      - 'phpstan.neon'
+      - 'phpunit.xml.dist'
+      - 'psalm.xml'
+      - 'rector.php'
+
+jobs:
+  build:
+    name: 'Build'
+    uses: webgrip/workflows/.forgejo/workflows/composer-install.yml@main
+
+  static-analysis:
+    name: 'Static Analysis'
+    needs: [ build ]
+    uses: webgrip/workflows/.forgejo/workflows/static-analysis.yml@main
+
+  tests:
+    name: 'Tests'
+    needs: [ build, static-analysis ]
+    uses: webgrip/workflows/.forgejo/workflows/tests.yml@main
+
+  release:
+    name: 'Semantic Release'
+    needs: [ static-analysis, tests ]
+    if: always() && needs.tests.result == 'success' && github.ref == 'refs/heads/main'
+    runs-on: docker
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      statuses: write
+    steps:
+      - name: Semantic Release
+        uses: https://forgejo.webgrip.dev/webgrip/workflows/.forgejo/composite-actions/semantic-release@main
+        with:
+          token: ${{ secrets.FORGEJO_TOKEN }}
