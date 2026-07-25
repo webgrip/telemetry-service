@@ -5,7 +5,7 @@ name: '[Workflow] On Source Change'
 #   - the release job is a normal `runs-on: docker` job calling the shared composite action with the
 #     CI bot's FORGEJO_TOKEN (a job-level semantic-release.yml reusable would collide with its inner
 #     `semantic-release` job id under Forgejo v15's job flattening)
-#   - semantic-release publishes via the Gitea plugin (shared .releaserc.js gates on GITEA_ACTIONS)
+#   - semantic-release publishes via the Gitea plugin (shared .releaserc.cjs gates on GITEA_ACTIONS)
 
 concurrency:
   group: push-${{ github.ref_name }}
@@ -20,7 +20,7 @@ on:
       - 'tests/**'
       - 'composer.json'
       - 'composer.lock'
-      - '.releaserc.js'
+      - '.releaserc.cjs'
       - '.forgejo/workflows/on_source_change.yml'
       - 'phpcs.xml'
       - 'phpmd.xml'
