@@ -1,3 +1,22 @@
+## [1.1.0](https://forgejo.webgrip.dev/webgrip/telemetry-service/compare/v1.0.5...v1.1.0) (2026-08-28)
+
+### Added
+
+* **docs:** flip strict link validation on — links verified clean (estate item [#17](https://forgejo.webgrip.dev/webgrip/telemetry-service/issues/17)) ([04d3e99](https://forgejo.webgrip.dev/webgrip/telemetry-service/commit/04d3e99a930f59801eee1446cb97b0df470fee4d))
+* **docs:** publish to docs.webgrip.dev/telemetry-service/ — estate rollout (ADR-0052) ([239741f](https://forgejo.webgrip.dev/webgrip/telemetry-service/commit/239741ff3bcdf82c6dd7b9a301b8bec58da07687))
+* **docs:** publish to own docs-telemetry-service bucket (estate [#2](https://forgejo.webgrip.dev/webgrip/telemetry-service/issues/2)) ([fa502c6](https://forgejo.webgrip.dev/webgrip/telemetry-service/commit/fa502c655a00cf607f1385dd38b017df3a943a01))
+
+### CI
+
+* adopt @webgrip/semantic-release-config ([3849e4b](https://forgejo.webgrip.dev/webgrip/telemetry-service/commit/3849e4b72753a6e192ca4b90d3cedb8826f962bf))
+* **release:** run the release job in the toolchain image; composite to v2.0.0 ([3a49f45](https://forgejo.webgrip.dev/webgrip/telemetry-service/commit/3a49f451a68b8653326c171f8c33b37602bcffa6))
+* retrigger docs (git-ensure fix in update_techdocs) ([0e98590](https://forgejo.webgrip.dev/webgrip/telemetry-service/commit/0e9859090758d8a4aa46e37983b4ab5371eb9479))
+* retrigger release train (re-run scheduler wedge; composite now has yq + prune fix) ([7949bf9](https://forgejo.webgrip.dev/webgrip/telemetry-service/commit/7949bf9d1689e3e0af6bebcefaf6e4f332fa3af7))
+
+### Internal
+
+* **docs:** bump reusables — backup-dir trash-net + pagefind estate-search index (estate items 1+4) ([a5977d0](https://forgejo.webgrip.dev/webgrip/telemetry-service/commit/a5977d06d576ba48412606f0bcddb1e81f30c254))
+
 ## [1.0.5](http://forgejo-http.forgejo.svc.cluster.local:3000/webgrip/telemetry-service/compare/1.0.4...1.0.5) (2026-07-18)
 
 ## [1.0.4](https://github.com/webgrip/telemetry-service/compare/1.0.3...1.0.4) (2025-05-27)
