@@ -1,7 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>webgrip/renovate-config:profile-app#v1.15.0"
+    "local>webgrip/renovate-config:profile-app#v1.15.0",
+    "local>webgrip/renovate-config:apm#v1.15.0"
   ],
   "description": "Carried only a $schema, so it ran on admin defaults: no graduated soak, no per-type semantic commits, no dashboard-approval gate."
 }
