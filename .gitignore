@@ -6,3 +6,7 @@ var/
 .env
 *.private.env.json
 auth.json
+
+
+# APM dependencies
+apm_modules/
