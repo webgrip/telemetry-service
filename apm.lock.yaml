@@ -4,8 +4,8 @@ dependencies:
 - repo_url: webgrip/agent-standards
   name: webgrip-baseline
   host: forgejo.webgrip.dev
-  resolved_commit: 3c583cd532c1fe967a780bab8c317dadaf596c60
-  resolved_ref: v0.3.1
+  resolved_commit: 2bcc813d0e59cd09f4b6b526d2501673cfcc9854
+  resolved_ref: v0.5.0
   version: 0.0.0
   virtual_path: packages/baseline
   is_virtual: true
@@ -14,14 +14,32 @@ dependencies:
   - .claude/rules/baseline.md
   - .claude/rules/forgejo-ci.md
   deployed_file_hashes:
-    .claude/rules/baseline.md: sha256:c6644318fe8544b9ad009e3e8a6626310666906270ca42ae3f1b621657e67801
+    .claude/rules/baseline.md: sha256:d0ca779fc6b749333676b2bbc68adaaf1277ec8344c37a340cdd38f6c9d423dd
     .claude/rules/forgejo-ci.md: sha256:18ac65e57d86f5d0c46da55d53582fbfb94ba74d87605e7394a39858fdac3011
-  content_hash: sha256:2930efa4f18a116b92d688e7cc6111f2337e217a111287a96af8e93b1a3ac21b
+  content_hash: sha256:2cb528fec450d156eb89c1a429d00a2058257b3c5a813772e850f46335044438
+- repo_url: webgrip/agent-standards
+  name: webgrip-coderabbit
+  host: forgejo.webgrip.dev
+  resolved_commit: 2bcc813d0e59cd09f4b6b526d2501673cfcc9854
+  resolved_ref: v0.5.0
+  version: 0.0.0
+  virtual_path: packages/coderabbit
+  is_virtual: true
+  package_type: apm_package
+  deployed_files:
+  - .agents/skills/coderabbit-review
+  - .agents/skills/coderabbit-review/SKILL.md
+  - .claude/skills/coderabbit-review
+  - .claude/skills/coderabbit-review/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/coderabbit-review/SKILL.md: sha256:92d4c2a3700a45c7c0416527cbd0f5d36f974179b5924a4bbac2400a8ab1520f
+    .claude/skills/coderabbit-review/SKILL.md: sha256:92d4c2a3700a45c7c0416527cbd0f5d36f974179b5924a4bbac2400a8ab1520f
+  content_hash: sha256:414366ca010389d7207b79c495f6d58e7b031b446b166658e30d5d2e0c6fd7f6
 - repo_url: webgrip/agent-standards
   name: webgrip-secrets
   host: forgejo.webgrip.dev
-  resolved_commit: 3c583cd532c1fe967a780bab8c317dadaf596c60
-  resolved_ref: v0.3.1
+  resolved_commit: 2bcc813d0e59cd09f4b6b526d2501673cfcc9854
+  resolved_ref: v0.5.0
   version: 0.0.0
   virtual_path: packages/secrets
   is_virtual: true
@@ -147,7 +165,7 @@ deployments:
   owners:
   - forgejo.webgrip.dev/webgrip/agent-standards/packages/baseline
   active_owner: forgejo.webgrip.dev/webgrip/agent-standards/packages/baseline
-  content_hash: sha256:c6644318fe8544b9ad009e3e8a6626310666906270ca42ae3f1b621657e67801
+  content_hash: sha256:d0ca779fc6b749333676b2bbc68adaaf1277ec8344c37a340cdd38f6c9d423dd
 - kind: project-relative
   target: claude
   value: .claude/rules/forgejo-ci.md
@@ -157,6 +175,24 @@ deployments:
   - forgejo.webgrip.dev/webgrip/agent-standards/packages/baseline
   active_owner: forgejo.webgrip.dev/webgrip/agent-standards/packages/baseline
   content_hash: sha256:18ac65e57d86f5d0c46da55d53582fbfb94ba74d87605e7394a39858fdac3011
+- kind: project-relative
+  target: claude
+  value: .claude/skills/coderabbit-review
+  runtime: null
+  scope: project
+  owners:
+  - forgejo.webgrip.dev/webgrip/agent-standards/packages/coderabbit
+  active_owner: forgejo.webgrip.dev/webgrip/agent-standards/packages/coderabbit
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/coderabbit-review/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - forgejo.webgrip.dev/webgrip/agent-standards/packages/coderabbit
+  active_owner: forgejo.webgrip.dev/webgrip/agent-standards/packages/coderabbit
+  content_hash: sha256:92d4c2a3700a45c7c0416527cbd0f5d36f974179b5924a4bbac2400a8ab1520f
 - kind: project-relative
   target: claude
   value: .claude/skills/guard-secrets
@@ -319,6 +355,24 @@ deployments:
   - forgejo.webgrip.dev/webgrip/ai-skills/skills/secrets-levels
   active_owner: forgejo.webgrip.dev/webgrip/ai-skills/skills/secrets-levels
   content_hash: sha256:9acda08a09b8a3e00497f0e16d97bbbd4939f4976dbfed69710f1fd125c91e41
+- kind: project-relative
+  target: codex
+  value: .agents/skills/coderabbit-review
+  runtime: null
+  scope: project
+  owners:
+  - forgejo.webgrip.dev/webgrip/agent-standards/packages/coderabbit
+  active_owner: forgejo.webgrip.dev/webgrip/agent-standards/packages/coderabbit
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/coderabbit-review/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - forgejo.webgrip.dev/webgrip/agent-standards/packages/coderabbit
+  active_owner: forgejo.webgrip.dev/webgrip/agent-standards/packages/coderabbit
+  content_hash: sha256:92d4c2a3700a45c7c0416527cbd0f5d36f974179b5924a4bbac2400a8ab1520f
 - kind: project-relative
   target: codex
   value: .agents/skills/guard-secrets
