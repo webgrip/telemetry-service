@@ -58,5 +58,13 @@
             "tbachert/spi": true,
             "ergebnis/composer-normalize": true
         }
+    },
+    "scripts": {
+        "agents:setup": "command -v mise >/dev/null || { echo 'Install mise first: https://mise.jdx.dev/getting-started.html'; exit 1; }; mise run agents-setup",
+        "agents:check": "command -v mise >/dev/null || { echo 'Install mise first: https://mise.jdx.dev/getting-started.html'; exit 1; }; mise run agents-check"
+    },
+    "scripts-descriptions": {
+        "agents:setup": "Set up the AI agent files and check this machine (once after cloning)",
+        "agents:check": "Fail when an agent file breaks the standard"
     }
 }
