@@ -52,7 +52,7 @@ jobs:
     # The v2 composite installs nothing: the release toolchain IS this image
     # (webgrip/workflows ADR-0005; without it the job fails with instructions).
     container:
-      image: harbor.webgrip.dev/webgrip/semantic-release:2.2.0@sha256:9dd1f016b42d841b3bbc00128833c7ca407dcce11d929422a21c973821879ab5
+      image: harbor.webgrip.dev/webgrip/semantic-release:2.3.1@sha256:a39fd2d6a0b29a947903def7ba88b20d17e73d22040ed01fc7b2e2bb6973068a
     permissions:
       contents: write
       issues: write
@@ -60,6 +60,6 @@ jobs:
       statuses: write
     steps:
       - name: Semantic Release
-        uses: https://forgejo.webgrip.dev/webgrip/workflows/.forgejo/composite-actions/semantic-release@v2.9.5
+        uses: https://forgejo.webgrip.dev/webgrip/workflows/.forgejo/composite-actions/semantic-release@v2.9.6
         with:
           token: ${{ secrets.WEBGRIP_CI_TOKEN }}
